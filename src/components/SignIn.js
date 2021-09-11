@@ -41,7 +41,7 @@ function SignIn() {
           className="no-underline px-3 py-2 bg-blue-800 text-white rounded-md"
           to="/dashboard"
         >
-          SignIn
+          Sign In
         </NavLink>
       </div>
       <div className="flex justify-center my-2">

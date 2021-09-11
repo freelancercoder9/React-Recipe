@@ -1,6 +1,17 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
+import { useDispatch, useSelector } from "react-redux";
+import {
+  getConfirmPwd,
+  getCreatePwd,
+  getEmailId,
+  getFirstName,
+  getLastName,
+} from "../actions";
+
 function SignUp() {
+  const dispatch = useDispatch();
+  const signUp_Data = useSelector((state) => state.signUp);
   return (
     <div className="border-2 border-black rounded-md w-6/12 m-auto mt-20">
       <div className="text-center py-4">
@@ -19,6 +30,10 @@ function SignUp() {
           <input
             type="text"
             className=" border-2 border-gray-200 w-7/12 h-7 px-2 text-xl font-light"
+            onChange={(e) => {
+              // console.log(e.target.value);
+              dispatch(getFirstName(e.target.value));
+            }}
           />
         </div>
         <div className="flex justify-between py-3">
@@ -28,6 +43,9 @@ function SignUp() {
           <input
             type="text"
             className=" border-2 border-gray-200 w-7/12 h-7 px-2 text-xl font-light"
+            onChange={(e) => {
+              dispatch(getLastName(e.target.value));
+            }}
           />
         </div>
         <div className="flex justify-between py-3">
@@ -37,6 +55,9 @@ function SignUp() {
           <input
             type="text"
             className=" border-2 border-gray-200 w-7/12 h-7 px-2 text-xl font-light"
+            onChange={(e) => {
+              dispatch(getEmailId(e.target.value));
+            }}
           />
         </div>
         <div className="flex justify-between py-3">
@@ -49,6 +70,9 @@ function SignUp() {
           <input
             type="text"
             className=" border-2 border-gray-200 w-7/12 h-7 px-2 text-xl font-light"
+            onChange={(e) => {
+              dispatch(getCreatePwd(e.target.value));
+            }}
           />
         </div>
         <div className="flex justify-between py-3">
@@ -61,6 +85,9 @@ function SignUp() {
           <input
             type="text"
             className=" border-2 border-gray-200 w-7/12 h-7 px-2 text-xl font-light"
+            onChange={(e) => {
+              dispatch(getConfirmPwd(e.target.value));
+            }}
           />
         </div>
       </div>
@@ -68,6 +95,9 @@ function SignUp() {
         <NavLink
           className="no-underline px-3 py-2 bg-blue-800 text-white rounded-md"
           to="/signIn"
+          onClick={() => {
+            console.log(signUp_Data);
+          }}
         >
           Create Account
         </NavLink>

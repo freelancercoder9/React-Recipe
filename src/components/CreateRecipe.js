@@ -1,6 +1,14 @@
-import React from "react";
+import React, { useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { getIngName_Quatity, getStepNo_desc } from "../actions";
 
 function CreateRecipe() {
+  const dispatch = useDispatch();
+  const create_Data = useSelector((state) => state.createRecipe);
+  const [ingredientName, setIngredientName] = useState("");
+  const [ingredientQty, setIngredientQty] = useState("");
+  const [stepNum, setStepNum] = useState("");
+  const [stepDesc, setStepDesc] = useState("");
   return (
     <div className="p-3">
       <div className="flex justify-between p-3">
@@ -29,6 +37,9 @@ function CreateRecipe() {
           <input
             type="text"
             className=" border-2 border-gray-200 w-3/12 h-7 px-2 text-xl font-light ml-2"
+            onChange={(e) => {
+              setIngredientName(e.target.value);
+            }}
           />
           <label
             htmlFor="ingredientQuantity"
@@ -39,8 +50,22 @@ function CreateRecipe() {
           <input
             type="text"
             className=" border-2 border-gray-200 w-3/12 h-7 px-2 text-xl font-light ml-2"
+            onChange={(e) => {
+              setIngredientQty(e.target.value);
+            }}
           />
-          <button className="bg-green-500 text-white px-3 py-1 rounded">
+          <button
+            className="bg-green-500 text-white px-3 py-1 rounded"
+            onClick={() => {
+              var obj = {
+                ing_Name: ingredientName,
+                ing_Qty: ingredientQty,
+              };
+              dispatch(getIngName_Quatity(obj));
+              setIngredientName("");
+              setIngredientQty("");
+            }}
+          >
             Add/Update
           </button>
         </div>
@@ -62,6 +87,9 @@ function CreateRecipe() {
           <input
             type="text"
             className=" border-2 border-gray-200 w-3/12 h-7 px-2 text-xl font-light ml-2"
+            onChange={(e) => {
+              setStepNum(e.target.value);
+            }}
           />
           <label
             htmlFor="description"
@@ -72,8 +100,22 @@ function CreateRecipe() {
           <input
             type="text"
             className=" border-2 border-gray-200 w-3/12 h-7 px-2 text-xl font-light ml-2"
+            onChange={(e) => {
+              setStepDesc(e.target.value);
+            }}
           />
-          <button className="bg-green-500 text-white px-3 py-1 rounded">
+          <button
+            className="bg-green-500 text-white px-3 py-1 rounded"
+            onClick={() => {
+              var obj1 = {
+                inst_stepNum: stepNum,
+                inst_stepDesc: stepDesc,
+              };
+              dispatch(getStepNo_desc(obj1));
+              setStepNum("");
+              setStepDesc("");
+            }}
+          >
             Add/Update
           </button>
         </div>

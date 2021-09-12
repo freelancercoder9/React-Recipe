@@ -1,13 +1,7 @@
 import React, { useState } from "react";
 import { NavLink } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getConfirmPwd,
-  getCreatePwd,
-  getEmailId,
-  getFirstName,
-  getLastName,
-} from "../actions";
+import { getConfirmPwd, getCreatePwd, getEmailId, getFirstName, getLastName } from "../actions";
 
 function SignUp() {
   const dispatch = useDispatch();
@@ -21,10 +15,7 @@ function SignUp() {
       </div>
       <div className="mx-4">
         <div className="flex justify-between py-3">
-          <label
-            htmlFor="firstName"
-            className="text-blue-900 font-sans text-xl"
-          >
+          <label htmlFor="firstName" className="text-blue-900 font-sans text-xl">
             First Name
           </label>
           <input
@@ -61,10 +52,7 @@ function SignUp() {
           />
         </div>
         <div className="flex justify-between py-3">
-          <label
-            htmlFor="createPassword"
-            className="text-blue-900 font-sans text-xl"
-          >
+          <label htmlFor="createPassword" className="text-blue-900 font-sans text-xl">
             Create Password
           </label>
           <input
@@ -76,17 +64,14 @@ function SignUp() {
           />
         </div>
         <div className="flex justify-between py-3">
-          <label
-            htmlFor="confirmPassword"
-            className="text-blue-900 font-sans text-xl"
-          >
+          <label htmlFor="confirmPassword" className="text-blue-900 font-sans text-xl">
             Confirm Password
           </label>
           <input
             type="text"
             className=" border-2 border-gray-200 w-7/12 h-7 px-2 text-xl font-light"
             onChange={(e) => {
-              dispatch(getConfirmPwd(e.target.value));
+              //dispatch(getConfirmPwd(e.target.value));
             }}
           />
         </div>

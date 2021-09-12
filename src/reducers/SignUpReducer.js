@@ -8,8 +8,6 @@ const signUpReducer = (state = {}, action) => {
       return (state = { ...state, emailId: action.payload });
     case "CREATE_PWD":
       return (state = { ...state, createPwd: action.payload });
-    case "CONFIRM_PWD":
-      return (state = { ...state, confirmPwd: action.payload });
 
     default:
       return state;

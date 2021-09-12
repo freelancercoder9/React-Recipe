@@ -22,12 +22,6 @@ export const getCreatePwd = (createPwd) => {
     payload: createPwd,
   };
 };
-export const getConfirmPwd = (confirmPwd) => {
-  return {
-    type: "CONFIRM_PWD",
-    payload: confirmPwd,
-  };
-};
 
 // Create Recipe
 

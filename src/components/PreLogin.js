@@ -1,7 +1,14 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 
 function PreLogin() {
+  const history = useHistory();
+  const onClickSignIn = () => {
+    history.push("/signIn");
+  };
+  const onClickSignUp = () => {
+    history.push("/signUp");
+  };
   return (
     <div className="border-2 border-black w-96 m-auto rounded-md mt-20">
       <div className="text-center text-2xl py-10">
@@ -13,18 +20,18 @@ function PreLogin() {
         </label>
       </div>
       <div className="flex justify-center py-5">
-        <NavLink
+        <button
           className="no-underline px-3 py-1 bg-green-500 text-white rounded-md"
-          to="/signIn"
+          onClick={onClickSignIn}
         >
           Sign In
-        </NavLink>
-        <NavLink
+        </button>
+        <button
           className="no-underline px-3 py-1 bg-blue-500 text-white rounded-md ml-4"
-          to="/signUp"
+          onClick={onClickSignUp}
         >
           Sign Up
-        </NavLink>
+        </button>
       </div>
     </div>
   );

@@ -1,6 +1,13 @@
 import React from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 function SignIn() {
+  const history = useHistory();
+  const onClickSignIn = () => {
+    history.push("/dashboard");
+  };
+  const onClickBackHome = () => {
+    history.push("/");
+  };
   return (
     <div className="border-2 border-black rounded-md w-6/12 m-auto mt-20">
       <div className="text-center py-4">
@@ -37,17 +44,17 @@ function SignIn() {
         </div>
       </div>
       <div className="flex justify-center my-3">
-        <NavLink
+        <button
           className="no-underline px-3 py-2 bg-blue-800 text-white rounded-md"
-          to="/dashboard"
+          onClick={onClickSignIn}
         >
           Sign In
-        </NavLink>
+        </button>
       </div>
       <div className="flex justify-center my-2">
-        <NavLink className=" text-black text-sm" to="/">
+        <button className=" text-black text-sm" onClick={onClickBackHome}>
           ← Back to Home
-        </NavLink>
+        </button>
       </div>
     </div>
   );

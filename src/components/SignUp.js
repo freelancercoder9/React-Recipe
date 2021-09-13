@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   getConfirmPwd,
@@ -10,8 +10,16 @@ import {
 } from "../actions";
 
 function SignUp() {
+  const history = useHistory();
   const dispatch = useDispatch();
   const signUp_Data = useSelector((state) => state.signUp);
+  const onClickCreateAccount = () => {
+    history.push("/signIn");
+    console.log(signUp_Data);
+  };
+  const onClickBackHome = () => {
+    history.push("/");
+  };
   return (
     <div className="border-2 border-black rounded-md w-6/12 m-auto mt-20">
       <div className="text-center py-4">
@@ -92,20 +100,17 @@ function SignUp() {
         </div>
       </div>
       <div className="flex justify-center my-3">
-        <NavLink
+        <button
           className="no-underline px-3 py-2 bg-blue-800 text-white rounded-md"
-          to="/signIn"
-          onClick={() => {
-            console.log(signUp_Data);
-          }}
+          onClick={onClickCreateAccount}
         >
           Create Account
-        </NavLink>
+        </button>
       </div>
       <div className="flex justify-center my-2">
-        <NavLink className=" text-black text-sm" to="/">
+        <button className=" text-black text-sm" onClick={onClickBackHome}>
           ← Back to Home
-        </NavLink>
+        </button>
       </div>
     </div>
   );

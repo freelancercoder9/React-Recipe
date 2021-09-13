@@ -30,7 +30,6 @@ export const getConfirmPwd = (confirmPwd) => {
 };
 
 // Create Recipe
-
 export const getRecipeName = (recipeName) => {
   return {
     type: "RECIPE_NAME",

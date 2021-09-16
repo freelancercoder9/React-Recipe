@@ -1,34 +1,36 @@
 import React, { useState } from "react";
+import userLoginService1 from "./services/userServices";
 
 import { NavLink, useHistory } from "react-router-dom";
 
 function SignIn() {
   const history = useHistory();
-  const [emailID, setEmailID] = useState("");
+  const [userName, setuserName] = useState("");
   const [errorList, setErrorList] = useState({
-    isemailError: true,
-    emailError: "",
+    isUserNameError: true,
+    userNameError: "",
     isPasswordError: true,
     passwordError: "",
   });
 
   const onClickSignIn = () => {
-    if (errorList.isPasswordError === false && errorList.isemailError === false) {
-      history.push("/dashboard");
+    if (errorList.isPasswordError === false && errorList.isUserNameError === false) {
+      userLoginService1();
+      //history.push("/dashboard");
     } else {
       console.log("please clear validations");
     }
   };
-  const onChangeEventEmail = (e) => {
+  const onChangeUserName = (e) => {
     const email = e.target.value;
     const re =
       /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     const value = re.test(String(email).toLowerCase());
     console.log(" -- ", value);
     if (!value) {
-      setErrorList({ ...errorList, isemailError: true, emailError: "please enter valid email" });
+      setErrorList({ ...errorList, isUserNameError: true, userNameError: "please enter valid email" });
     } else {
-      setErrorList({ ...errorList, isemailError: false, emailError: "" });
+      setErrorList({ ...errorList, isUserNameError: false, userNameError: "" });
     }
   };
   const onChangeEventPassword = (e) => {
@@ -49,12 +51,12 @@ function SignIn() {
       </div>
       <div className="mx-4">
         <div className="flex justify-between py-3">
-          <label htmlFor="emailId" className="text-blue-900 font-sans text-xl">
-            Email ID
+          <label htmlFor="userName" className="text-blue-900 font-sans text-xl">
+            userName
           </label>
           <div className="w-7/12">
-            <input type="text" onChange={onChangeEventEmail} className=" border-2 border-gray-200 w-full h-7 px-2 text-xl font-light" />
-            <div style={{ color: "#cc0000" }}>{errorList.emailError}</div>
+            <input type="text" onChange={onChangeUserName} className=" border-2 border-gray-200 w-full h-7 px-2 text-xl font-light" />
+            <div style={{ color: "#cc0000" }}>{errorList.userNameError}</div>
           </div>
         </div>
         <div className="flex justify-between py-3">

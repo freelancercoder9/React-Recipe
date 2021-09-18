@@ -16,7 +16,7 @@ function SignIn() {
   const onClickSignIn = () => {
     if (errorList.isPasswordError === false && errorList.isUserNameError === false) {
       userLoginService1();
-      //history.push("/dashboard");
+      history.push("/dashboard");
     } else {
       console.log("please clear validations");
     }

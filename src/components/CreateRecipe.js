@@ -17,6 +17,10 @@ function CreateRecipe() {
     console.log(imageList, addUpdateIndex);
     setImages(imageList);
   };
+
+  const createRecord = () => {
+    console.log("in create", images);
+  };
   return (
     <div className="p-3">
       <div className="flex justify-between p-3">
@@ -141,7 +145,9 @@ function CreateRecipe() {
         <div className="mt-2"></div>
       </div>
       <div className="mt-5 flex justify-center ">
-        <button className="bg-green-600 text-white px-10 py-1 rounded">Create Recipe</button>
+        <button onClick={createRecord} className="bg-green-600 text-white px-10 py-1 rounded">
+          Create Recipe
+        </button>
       </div>
     </div>
   );

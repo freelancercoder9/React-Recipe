@@ -1,13 +1,9 @@
-export const getFirstName = (firstName) => {
+// Sign Up
+
+export const getSignUp_UserName = (userName) => {
   return {
-    type: "FIRST_NAME",
-    payload: firstName,
-  };
-};
-export const getLastName = (lastName) => {
-  return {
-    type: "LAST_NAME",
-    payload: lastName,
+    type: "SIGNUP_USER_NAME",
+    payload: userName,
   };
 };
 export const getEmailId = (emailId) => {
@@ -16,16 +12,11 @@ export const getEmailId = (emailId) => {
     payload: emailId,
   };
 };
-export const getCreatePwd = (createPwd) => {
+
+export const getSignUpPassword = (password) => {
   return {
-    type: "CREATE_PWD",
-    payload: createPwd,
-  };
-};
-export const getConfirmPwd = (confirmPwd) => {
-  return {
-    type: "CONFIRM_PWD",
-    payload: confirmPwd,
+    type: "SIGNUP_PASSWORD",
+    payload: password,
   };
 };
 
@@ -47,5 +38,19 @@ export const getStepNo_desc = (stepNo_desc) => {
   return {
     type: "STEPNUM_DESC",
     payload: stepNo_desc,
+  };
+};
+
+// Sign In
+export const getUserName = (userName) => {
+  return {
+    type: "SIGNIN_USERNAME",
+    payload: userName,
+  };
+};
+export const getPassword = (password) => {
+  return {
+    type: "SIGNIN_PASSWORD",
+    payload: password,
   };
 };

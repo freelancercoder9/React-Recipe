@@ -1,21 +1,36 @@
 import React, { useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import {
-  getConfirmPwd,
-  getCreatePwd,
-  getEmailId,
-  getFirstName,
-  getLastName,
-} from "../actions";
+import { getSignUpPassword, getEmailId, getSignUp_UserName } from "../actions";
+import { user_SignUp_Service } from "../services/UserServices";
 
 function SignUp() {
+  const [createPwd, setCreatePwd] = useState("");
+  const [confirmPwd, setConfirmPwd] = useState("");
+  const [errorList, setErrorList] = useState({
+    isUserNameError: true,
+    userNameErrorMsg: "",
+    ispwdError: true,
+    pwdErrorMsg: "",
+    isEmailError: true,
+    emailErrorMsg: "",
+  });
   const history = useHistory();
   const dispatch = useDispatch();
   const signUp_Data = useSelector((state) => state.signUp);
   const onClickCreateAccount = () => {
-    history.push("/signIn");
-    console.log(signUp_Data);
+    if (
+      errorList.isUserNameError === false &&
+      errorList.ispwdError === false &&
+      errorList.isEmailError === false
+    ) {
+      const res = user_SignUp_Service(signUp_Data);
+      console.log("service response:", res);
+      // history.push("/signIn");
+      console.log(signUp_Data);
+    } else {
+      console.log("errorList :", errorList);
+    }
   };
   const onClickBackHome = () => {
     history.push("/");
@@ -33,29 +48,31 @@ function SignUp() {
             htmlFor="firstName"
             className="text-blue-900 font-sans text-xl"
           >
-            First Name
+            User Name
           </label>
           <input
             type="text"
             className=" border-2 border-gray-200 w-7/12 h-7 px-2 text-xl font-light"
             onChange={(e) => {
-              // console.log(e.target.value);
-              dispatch(getFirstName(e.target.value));
+              console.log(e.target.value);
+              if (e.target.value.length > 0) {
+                setErrorList({
+                  ...errorList,
+                  isUserNameError: false,
+                  userNameErrorMsg: "",
+                });
+                dispatch(getSignUp_UserName(e.target.value));
+              } else {
+                setErrorList({
+                  ...errorList,
+                  isUserNameError: true,
+                  userNameErrorMsg: "please enter user name",
+                });
+              }
             }}
           />
         </div>
-        <div className="flex justify-between py-3">
-          <label htmlFor="lastName" className="text-blue-900 font-sans text-xl">
-            Last Name
-          </label>
-          <input
-            type="text"
-            className=" border-2 border-gray-200 w-7/12 h-7 px-2 text-xl font-light"
-            onChange={(e) => {
-              dispatch(getLastName(e.target.value));
-            }}
-          />
-        </div>
+
         <div className="flex justify-between py-3">
           <label htmlFor="emailId" className="text-blue-900 font-sans text-xl">
             Email ID
@@ -64,7 +81,20 @@ function SignUp() {
             type="text"
             className=" border-2 border-gray-200 w-7/12 h-7 px-2 text-xl font-light"
             onChange={(e) => {
-              dispatch(getEmailId(e.target.value));
+              if (e.target.value.length > 0) {
+                setErrorList({
+                  ...errorList,
+                  isEmailError: false,
+                  emailErrorMsg: "",
+                });
+                dispatch(getEmailId(e.target.value));
+              } else {
+                setErrorList({
+                  ...errorList,
+                  isEmailError: true,
+                  emailErrorMsg: "please enter user name",
+                });
+              }
             }}
           />
         </div>
@@ -76,10 +106,24 @@ function SignUp() {
             Create Password
           </label>
           <input
-            type="text"
+            type="password"
             className=" border-2 border-gray-200 w-7/12 h-7 px-2 text-xl font-light"
             onChange={(e) => {
-              dispatch(getCreatePwd(e.target.value));
+              setCreatePwd(e.target.value);
+              if (e.target.value === confirmPwd) {
+                setErrorList({
+                  ...errorList,
+                  ispwdError: false,
+                  pwdErrorMsg: "",
+                });
+                dispatch(getSignUpPassword(e.target.value));
+              } else {
+                setErrorList({
+                  ...errorList,
+                  ispwdError: true,
+                  pwdErrorMsg: "password and confirm password should be same",
+                });
+              }
             }}
           />
         </div>
@@ -91,10 +135,25 @@ function SignUp() {
             Confirm Password
           </label>
           <input
-            type="text"
+            type="password"
             className=" border-2 border-gray-200 w-7/12 h-7 px-2 text-xl font-light"
             onChange={(e) => {
-              dispatch(getConfirmPwd(e.target.value));
+              setConfirmPwd(e.target.value);
+              console.log(" created: ", createPwd);
+              if (e.target.value === createPwd) {
+                setErrorList({
+                  ...errorList,
+                  ispwdError: false,
+                  pwdErrorMsg: "",
+                });
+                dispatch(getSignUpPassword(e.target.value));
+              } else {
+                setErrorList({
+                  ...errorList,
+                  ispwdError: true,
+                  pwdErrorMsg: "password and confirm password should be same",
+                });
+              }
             }}
           />
         </div>

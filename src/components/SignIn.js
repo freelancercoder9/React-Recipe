@@ -1,9 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import { NavLink, useHistory } from "react-router-dom";
+import { getPassword, getUserName } from "../actions";
+import { useDispatch, useSelector } from "react-redux";
+import { userLoginService } from "../services/UserServices";
 function SignIn() {
+  const dispatch = useDispatch();
   const history = useHistory();
+  const signIn_Data = useSelector((state) => state.SignIn);
+  const [errorList, setErrorList] = useState({
+    isPwdError: true,
+    pwdErrorMsg: "",
+    isUserNameError: true,
+    userNameErrorMsg: "",
+  });
   const onClickSignIn = () => {
-    history.push("/dashboard");
+    console.log(signIn_Data);
+    if (errorList.isPwdError === false && errorList.isUserNameError === false) {
+      userLoginService(signIn_Data);
+      history.push("/dashboard");
+    } else {
+      setErrorList({
+        ...errorList,
+        isUserNameError: true,
+        userNameErrorMsg: "please enter username",
+      });
+      setErrorList({
+        ...errorList,
+        isPwdError: true,
+        pwdErrorMsg: "please enter password",
+      });
+      console.log("please clear validations");
+    }
   };
   const onClickBackHome = () => {
     history.push("/");
@@ -18,21 +45,63 @@ function SignIn() {
       <div className="mx-4">
         <div className="flex justify-between py-3">
           <label htmlFor="emailId" className="text-blue-900 font-sans text-xl">
-            Email ID
+            UserName
           </label>
-          <input
-            type="text"
-            className=" border-2 border-gray-200 w-7/12 h-7 px-2 text-xl font-light"
-          />
+          <div className="w-7/12">
+            <input
+              type="text"
+              className=" border-2 border-gray-200 w-full h-7 px-2 text-xl font-light"
+              onChange={(e) => {
+                if (e.target.value.length > 0) {
+                  setErrorList({
+                    ...errorList,
+                    isUserNameError: false,
+                    userNameErrorMsg: "",
+                  });
+                } else {
+                  setErrorList({
+                    ...errorList,
+                    isUserNameError: true,
+                    userNameErrorMsg: "please enter username.",
+                  });
+                }
+                dispatch(getUserName(e.target.value));
+              }}
+            />
+            <label htmlFor="" className="text-red-500 text-smz">
+              {errorList.userNameErrorMsg}
+            </label>
+          </div>
         </div>
         <div className="flex justify-between py-3">
           <label htmlFor="password" className="text-blue-900 font-sans text-xl">
             Password
           </label>
-          <input
-            type="text"
-            className=" border-2 border-gray-200 w-7/12 h-7 px-2 text-xl font-light"
-          />
+          <div className="w-7/12">
+            <input
+              type="password"
+              className=" border-2 border-gray-200 w-full h-7 px-2 text-xl font-light"
+              onChange={(e) => {
+                if (e.target.value.length > 0) {
+                  setErrorList({
+                    ...errorList,
+                    isPwdError: false,
+                    pwdErrorMsg: "",
+                  });
+                } else {
+                  setErrorList({
+                    ...errorList,
+                    isPwdError: true,
+                    pwdErrorMsg: "please enter pwd",
+                  });
+                }
+                dispatch(getPassword(e.target.value));
+              }}
+            />
+            <label htmlFor="" className="text-red-500 text-sm">
+              {errorList.pwdErrorMsg}
+            </label>
+          </div>
         </div>
         <div className="py-3">
           <label

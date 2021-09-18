@@ -112,13 +112,18 @@ function SignIn() {
           </label>
         </div>
       </div>
-      <div className="flex justify-center my-3">
-        <button
-          className="no-underline px-3 py-2 bg-blue-800 text-white rounded-md"
-          onClick={onClickSignIn}
-        >
-          Sign In
-        </button>
+      <div className="text-center">
+        <label htmlFor="" className="text-red-500 text-sm">
+          services msg
+        </label>
+        <div className="flex justify-center my-3">
+          <button
+            className="no-underline px-3 py-2 bg-blue-800 text-white rounded-md"
+            onClick={onClickSignIn}
+          >
+            Sign In
+          </button>
+        </div>
       </div>
       <div className="flex justify-center my-2">
         <button className=" text-black text-sm" onClick={onClickBackHome}>

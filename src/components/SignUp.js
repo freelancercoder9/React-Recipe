@@ -31,12 +31,27 @@ function SignUp() {
         setErrorList({ ...errorList, serviceErrorResponse: res.message });
       }
     } else {
-      setErrorList({
-        ...errorList,
-        userNameErrorMsg: "please enter valid user name",
-        emailErrorMsg: "please enter email",
-        pwdErrorMsg: "please enter password",
-      });
+      if (errorList.isUserNameError) {
+        console.log("in username error");
+        setErrorList({
+          ...errorList,
+          userNameErrorMsg: "please enter valid user name",
+        });
+      }
+      if (errorList.ispwdError) {
+        setErrorList({
+          ...errorList,
+          pwdErrorMsg: "please enter password",
+        });
+      }
+      if (errorList.isEmailError) {
+        console.log("in password error");
+        setErrorList({
+          ...errorList,
+          emailErrorMsg: "please enter email id",
+        });
+      }
+
       console.log();
     }
   };

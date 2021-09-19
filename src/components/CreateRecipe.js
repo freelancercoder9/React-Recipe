@@ -24,17 +24,11 @@ function CreateRecipe() {
         />
       </div>
       <div className=" p-3">
-        <label
-          htmlFor="ingredients"
-          className="text-blue-900 font-sans text-xl"
-        >
+        <label htmlFor="ingredients" className="text-blue-900 font-sans text-xl">
           Ingredients :
         </label>
         <div className="flex justify-between mt-2">
-          <label
-            htmlFor="ingredientName"
-            className="text-blue-900 font-sans text-xl  w-28"
-          >
+          <label htmlFor="ingredientName" className="text-blue-900 font-sans text-xl  w-28">
             Name
           </label>
           <input
@@ -45,10 +39,7 @@ function CreateRecipe() {
               setIngredientName(e.target.value);
             }}
           />
-          <label
-            htmlFor="ingredientQuantity"
-            className="text-blue-900 font-sans text-xl w-28"
-          >
+          <label htmlFor="ingredientQuantity" className="text-blue-900 font-sans text-xl w-28">
             Quantity
           </label>
           <input
@@ -91,17 +82,11 @@ function CreateRecipe() {
         </div>
       </div>
       <div className=" p-3">
-        <label
-          htmlFor="instructions"
-          className="text-blue-900 font-sans text-xl w-28"
-        >
+        <label htmlFor="instructions" className="text-blue-900 font-sans text-xl w-28">
           Instructions :
         </label>
         <div className="flex justify-between mt-2">
-          <label
-            htmlFor="stepNo"
-            className="text-blue-900 font-sans text-xl w-28"
-          >
+          <label htmlFor="stepNo" className="text-blue-900 font-sans text-xl w-28">
             Step No.
           </label>
           <input
@@ -112,10 +97,7 @@ function CreateRecipe() {
               setStepNum(e.target.value);
             }}
           />
-          <label
-            htmlFor="description"
-            className="text-blue-900 font-sans text-xl w-28 "
-          >
+          <label htmlFor="description" className="text-blue-900 font-sans text-xl w-28 ">
             Description
           </label>
           <input
@@ -157,22 +139,14 @@ function CreateRecipe() {
         </div>
       </div>
       <div className="p-3">
-        <label
-          htmlFor="refImage"
-          className="text-blue-900 font-sans text-xl w-32"
-        >
+        <label htmlFor="refImage" className="text-blue-900 font-sans text-xl w-32">
           Ref.Image :
         </label>
         <div className="mt-2">
-          <label
-            htmlFor="plsUploadImg"
-            className="text-blue-900 font-sans text-xl"
-          >
+          <label htmlFor="plsUploadImg" className="text-blue-900 font-sans text-xl">
             Please upload ref. image:
           </label>
-          <button className="bg-green-600 text-white px-3 py-1 rounded ml-3">
-            Upload Image
-          </button>
+          <button className="bg-green-600 text-white px-3 py-1 rounded ml-3">Upload Image</button>
         </div>
       </div>
       <div className="mt-5 flex justify-center ">

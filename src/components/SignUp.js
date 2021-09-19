@@ -14,20 +14,21 @@ function SignUp() {
     pwdErrorMsg: "",
     isEmailError: true,
     emailErrorMsg: "",
+    serviceErrorResponse: "",
   });
   const history = useHistory();
   const dispatch = useDispatch();
   const signUp_Data = useSelector((state) => state.signUp);
-  const onClickCreateAccount = () => {
-    if (
-      errorList.isUserNameError === false &&
-      errorList.ispwdError === false &&
-      errorList.isEmailError === false
-    ) {
-      const res = user_SignUp_Service(signUp_Data);
-      console.log("service response:", res);
-      // history.push("/signIn");
-      console.log(signUp_Data);
+  const onClickCreateAccount = async () => {
+    if (errorList.isUserNameError === false && errorList.ispwdError === false && errorList.isEmailError === false) {
+      const res = await user_SignUp_Service(signUp_Data);
+      if (res.code === "20001") {
+        console.log("Success Response");
+        setErrorList({ ...errorList, serviceErrorResponse: "" });
+        history.push("/signIn");
+      } else {
+        setErrorList({ ...errorList, serviceErrorResponse: res.message });
+      }
     } else {
       console.log("errorList :", errorList);
     }
@@ -44,10 +45,7 @@ function SignUp() {
       </div>
       <div className="mx-4">
         <div className="flex justify-between py-3">
-          <label
-            htmlFor="firstName"
-            className="text-blue-900 font-sans text-xl"
-          >
+          <label htmlFor="firstName" className="text-blue-900 font-sans text-xl">
             User Name
           </label>
           <div className="w-7/12">
@@ -109,10 +107,7 @@ function SignUp() {
           </div>
         </div>
         <div className="flex justify-between py-3">
-          <label
-            htmlFor="createPassword"
-            className="text-blue-900 font-sans text-xl"
-          >
+          <label htmlFor="createPassword" className="text-blue-900 font-sans text-xl">
             Create Password
           </label>
           <div className="w-7/12">
@@ -143,10 +138,7 @@ function SignUp() {
           </div>
         </div>
         <div className="flex justify-between py-3">
-          <label
-            htmlFor="confirmPassword"
-            className="text-blue-900 font-sans text-xl"
-          >
+          <label htmlFor="confirmPassword" className="text-blue-900 font-sans text-xl">
             Confirm Password
           </label>
           <div className="w-7/12">
@@ -180,13 +172,10 @@ function SignUp() {
       </div>
       <div className="text-center">
         <label htmlFor="" className="text-red-500 text-sm">
-          services msg
+          {errorList.serviceErrorResponse}
         </label>
         <div className="flex justify-center my-3">
-          <button
-            className="no-underline px-3 py-2 bg-blue-800 text-white rounded-md"
-            onClick={onClickCreateAccount}
-          >
+          <button className="no-underline px-3 py-2 bg-blue-800 text-white rounded-md" onClick={onClickCreateAccount}>
             Create Account
           </button>
         </div>

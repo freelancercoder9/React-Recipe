@@ -39,13 +39,14 @@ function SignUp() {
         });
       }
       if (errorList.ispwdError) {
+        console.log("in password error");
         setErrorList({
           ...errorList,
           pwdErrorMsg: "please enter password",
         });
       }
       if (errorList.isEmailError) {
-        console.log("in password error");
+        console.log("in email  error");
         setErrorList({
           ...errorList,
           emailErrorMsg: "please enter email id",

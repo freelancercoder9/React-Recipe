@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getSignUpPassword, getEmailId, getSignUp_UserName } from "../actions";
 import { user_SignUp_Service } from "../services/UserServices";
@@ -22,6 +22,7 @@ function SignUp() {
   const onClickCreateAccount = async () => {
     if (errorList.isUserNameError === false && errorList.ispwdError === false && errorList.isEmailError === false) {
       const res = await user_SignUp_Service(signUp_Data);
+
       if (res.code === "20001") {
         console.log("Success Response");
         setErrorList({ ...errorList, serviceErrorResponse: "" });
@@ -30,7 +31,13 @@ function SignUp() {
         setErrorList({ ...errorList, serviceErrorResponse: res.message });
       }
     } else {
-      console.log("errorList :", errorList);
+      setErrorList({
+        ...errorList,
+        userNameErrorMsg: "please enter valid user name",
+        emailErrorMsg: "please enter email",
+        pwdErrorMsg: "please enter password",
+      });
+      console.log();
     }
   };
   const onClickBackHome = () => {
@@ -54,7 +61,7 @@ function SignUp() {
               className=" border-2 border-gray-200 w-full h-7 px-2 text-xl font-light"
               onChange={(e) => {
                 console.log(e.target.value);
-                if (e.target.value.length > 0) {
+                if (e.target.value.length > 3) {
                   setErrorList({
                     ...errorList,
                     isUserNameError: false,
@@ -85,7 +92,7 @@ function SignUp() {
               type="text"
               className=" border-2 border-gray-200 w-full h-7 px-2 text-xl font-light"
               onChange={(e) => {
-                if (e.target.value.length > 0) {
+                if (e.target.value.length > 3) {
                   setErrorList({
                     ...errorList,
                     isEmailError: false,

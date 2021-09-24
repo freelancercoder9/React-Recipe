@@ -2,10 +2,12 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { getIngName_Quatity, getStepNo_desc, getRecipeName } from "../actions";
 import ImageUploading from "react-images-uploading";
+import { createRecipe_Service } from "../services/UserServices";
 
 function CreateRecipe() {
   const dispatch = useDispatch();
   const create_Data = useSelector((state) => state.createRecipe);
+  const userSession_Data = useSelector((state) => state.userSession);
   const [ingredientName, setIngredientName] = useState("");
   const [ingredientQty, setIngredientQty] = useState("");
   const [stepNum, setStepNum] = useState("");
@@ -19,6 +21,8 @@ function CreateRecipe() {
     instructionErrorMsg: "",
     isUploadImg: true,
     uploadImgerrorMsg: "",
+    isImageName: true,
+    ImageErrorMsg: "",
   });
   const [images, setImages] = React.useState([]);
   const maxNumber = 69;
@@ -30,13 +34,25 @@ function CreateRecipe() {
   };
   const onClickCreateRecipe = () => {
     console.log("in create", images);
-    if (
-      isRecipeName === false &&
-      ingredients.length > 0 &&
-      instructions.length > 0
-    ) {
-    } else {
-    }
+    var create_DataNew = {
+      ...create_Data,
+      image: images[0].data_url.split(",")[1],
+      userName: userSession_Data.userName,
+      email: userSession_Data.email,
+    };
+
+    createRecipe_Service(create_DataNew, userSession_Data.accessToken);
+
+    // if (
+    //   errorList.isRecipeName === false &&
+    //   errorList.isIngredient === false &&
+    //   errorList.isInstruction === false &&
+    //   errorList.isImageName === false
+    // ) {
+    //   console.log("service call");
+    // } else {
+    //   console.log("error msg");
+    // }
   };
 
   return (

@@ -1,13 +1,12 @@
 const recipeObj = {
-  recipeName: "",
+  title: "",
   ingredients: [],
   instructions: [],
-  recipeImage: "",
 };
 const CreateReducer = (state = recipeObj, action) => {
   switch (action.type) {
     case "RECIPE_NAME":
-      return (state = { ...state, recipeName: action.payload });
+      return (state = { ...state, title: action.payload });
     case "ING_NAME_QUANTITY":
       var intial_data = state.ingredients;
       intial_data = [...intial_data, action.payload];

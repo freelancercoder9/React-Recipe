@@ -54,3 +54,16 @@ export const getPassword = (password) => {
     payload: password,
   };
 };
+// export const getAccessToken = (accessToken) => {
+//   return {
+//     type: "ACCESS_TOKEN",
+//     payload: accessToken,
+//   };
+// };
+
+export const getUserSession_Data = (User_Data) => {
+  return {
+    type: "USER_SESSION",
+    payload: User_Data,
+  };
+};

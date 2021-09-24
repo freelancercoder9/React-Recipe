@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { getPassword, getUserName } from "../actions";
+import { getPassword, getUserName, getUserSession_Data } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
 import { userLoginService } from "../services/UserServices";
 function SignIn() {
@@ -12,12 +12,22 @@ function SignIn() {
     pwdErrorMsg: "",
     isUserNameError: true,
     userNameErrorMsg: "",
+    serviceErrorResponse: "",
   });
-  const onClickSignIn = () => {
+  const onClickSignIn = async () => {
     console.log(signIn_Data);
     if (errorList.isPwdError === false && errorList.isUserNameError === false) {
-      userLoginService(signIn_Data);
-      history.push("/dashboard");
+      const res = await userLoginService(signIn_Data);
+      console.log(res.code);
+      if (res.code === 20003) {
+        console.log("inside if", res.data.accessToken);
+        setErrorList({ ...errorList, serviceErrorResponse: "" });
+        dispatch(getUserSession_Data(res.data));
+        history.push("/dashboard");
+      } else {
+        console.log("inside else", res);
+        setErrorList({ ...errorList, serviceErrorResponse: res.message });
+      }
     } else {
       setErrorList({
         ...errorList,
@@ -114,7 +124,7 @@ function SignIn() {
       </div>
       <div className="text-center">
         <label htmlFor="" className="text-red-500 text-sm">
-          services msg
+          {errorList.serviceErrorResponse}
         </label>
         <div className="flex justify-center my-3">
           <button

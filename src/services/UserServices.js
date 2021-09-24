@@ -16,9 +16,11 @@ async function user_SignUp_Service(serviceData_signUp) {
   const returnResponse = await axios
     .post("http://192.168.18.3:7788/user/register", serviceData_signUp)
     .then((response) => {
+      console.log("Success response : ", response);
       return response.data;
     })
     .catch((err) => {
+      console.log("catch response : ", err);
       return err.response.data;
     });
   console.log("res in service call :", returnResponse);

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { getSignUpPassword, getEmailId, getSignUp_UserName } from "../actions";
 import { user_SignUp_Service } from "../services/UserServices";
@@ -26,6 +26,7 @@ function SignUp() {
       errorList.isEmailError === false
     ) {
       const res = await user_SignUp_Service(signUp_Data);
+
       if (res.code === "20001") {
         console.log("Success Response");
         setErrorList({ ...errorList, serviceErrorResponse: "" });
@@ -34,7 +35,29 @@ function SignUp() {
         setErrorList({ ...errorList, serviceErrorResponse: res.message });
       }
     } else {
-      console.log("errorList :", errorList);
+      if (errorList.isUserNameError) {
+        console.log("in username error");
+        setErrorList({
+          ...errorList,
+          userNameErrorMsg: "please enter valid user name",
+        });
+      }
+      if (errorList.ispwdError) {
+        console.log("in password error");
+        setErrorList({
+          ...errorList,
+          pwdErrorMsg: "please enter password",
+        });
+      }
+      if (errorList.isEmailError) {
+        console.log("in email  error");
+        setErrorList({
+          ...errorList,
+          emailErrorMsg: "please enter email id",
+        });
+      }
+
+      console.log();
     }
   };
   const onClickBackHome = () => {
@@ -61,7 +84,7 @@ function SignUp() {
               className=" border-2 border-gray-200 w-full h-7 px-2 text-xl font-light"
               onChange={(e) => {
                 console.log(e.target.value);
-                if (e.target.value.length > 0) {
+                if (e.target.value.length > 3) {
                   setErrorList({
                     ...errorList,
                     isUserNameError: false,
@@ -92,7 +115,7 @@ function SignUp() {
               type="text"
               className=" border-2 border-gray-200 w-full h-7 px-2 text-xl font-light"
               onChange={(e) => {
-                if (e.target.value.length > 0) {
+                if (e.target.value.length > 3) {
                   setErrorList({
                     ...errorList,
                     isEmailError: false,

@@ -26,7 +26,7 @@ function Dashboard() {
         </label>
       </nav>
       <div className="grid grid-cols-12 ">
-        <div className="col-span-4 border-2 flex flex-col text-center text-lg mt-10 px-6">
+        <div className="col-span-4  flex flex-col text-center text-lg mt-10 px-6">
           <button
             className="no-underline py-2 bg-green-500 text-white rounded"
             onClick={() => {

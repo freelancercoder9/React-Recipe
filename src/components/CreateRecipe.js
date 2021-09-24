@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { getIngName_Quatity, getStepNo_desc } from "../actions";
+import { getIngName_Quatity, getStepNo_desc, getRecipeName } from "../actions";
+import ImageUploading from "react-images-uploading";
 
 function CreateRecipe() {
   const dispatch = useDispatch();
@@ -9,6 +10,35 @@ function CreateRecipe() {
   const [ingredientQty, setIngredientQty] = useState("");
   const [stepNum, setStepNum] = useState("");
   const [stepDesc, setStepDesc] = useState("");
+  const [errorList, setErrorList] = useState({
+    isRecipeName: true,
+    recipeNameErrorMsg: "",
+    isIngredient: true,
+    ingredientErrorMsg: "",
+    isInstruction: true,
+    instructionErrorMsg: "",
+    isUploadImg: true,
+    uploadImgerrorMsg: "",
+  });
+  const [images, setImages] = React.useState([]);
+  const maxNumber = 69;
+
+  const onChange = (imageList, addUpdateIndex) => {
+    // data for submit
+    console.log(imageList, addUpdateIndex);
+    setImages(imageList);
+  };
+  const onClickCreateRecipe = () => {
+    console.log("in create", images);
+    if (
+      isRecipeName === false &&
+      ingredients.length > 0 &&
+      instructions.length > 0
+    ) {
+    } else {
+    }
+  };
+
   return (
     <div className="p-3">
       <div className="flex justify-between p-3">
@@ -17,7 +47,23 @@ function CreateRecipe() {
         </label>
         <input
           type="text"
-          className=" border-2 border-gray-200 w-8/12 h-7 px-2 text-xl font-light"
+          className="border-2 border-gray-200 w-8/12 h-7 px-2 text-xl font-light"
+          onChange={(e) => {
+            if (e.target.value.length > 0) {
+              setErrorList({
+                ...errorList,
+                isRecipeName: false,
+                recipeNameErrorMsg: "",
+              });
+              dispatch(getRecipeName(e.target.value));
+            } else {
+              setErrorList({
+                ...errorList,
+                isRecipeName: true,
+                recipeNameErrorMsg: "please enter Recipe Name",
+              });
+            }
+          }}
         />
       </div>
       <div className=" p-3">
@@ -36,6 +82,7 @@ function CreateRecipe() {
           </label>
           <input
             type="text"
+            value={ingredientName}
             className=" border-2 border-gray-200 w-3/12 h-7 px-2 text-xl font-light ml-2"
             onChange={(e) => {
               setIngredientName(e.target.value);
@@ -49,6 +96,7 @@ function CreateRecipe() {
           </label>
           <input
             type="text"
+            value={ingredientQty}
             className=" border-2 border-gray-200 w-3/12 h-7 px-2 text-xl font-light ml-2"
             onChange={(e) => {
               setIngredientQty(e.target.value);
@@ -57,6 +105,7 @@ function CreateRecipe() {
           <button
             className="bg-green-500 text-white px-3 py-1 rounded"
             onClick={() => {
+              console.log(ingredientName, "  00 ", ingredientQty);
               var obj = {
                 ing_Name: ingredientName,
                 ing_Qty: ingredientQty,
@@ -68,6 +117,20 @@ function CreateRecipe() {
           >
             Add/Update
           </button>
+        </div>
+      </div>
+      <div className="flex justify-center my-2">
+        <div className=" text-red-400 flex flex-col border-2 w-96">
+          {create_Data.ingredients.map((item, index) => {
+            return (
+              <div key={index} className="p-1 flex  mx-3">
+                <label htmlFor="" className="w-40">
+                  {item.ing_Name}
+                </label>
+                <label htmlFor="">{item.ing_Qty}</label>
+              </div>
+            );
+          })}
         </div>
       </div>
       <div className=" p-3">
@@ -86,6 +149,7 @@ function CreateRecipe() {
           </label>
           <input
             type="text"
+            value={stepNum}
             className=" border-2 border-gray-200 w-3/12 h-7 px-2 text-xl font-light ml-2"
             onChange={(e) => {
               setStepNum(e.target.value);
@@ -99,6 +163,7 @@ function CreateRecipe() {
           </label>
           <input
             type="text"
+            value={stepDesc}
             className=" border-2 border-gray-200 w-3/12 h-7 px-2 text-xl font-light ml-2"
             onChange={(e) => {
               setStepDesc(e.target.value);
@@ -120,6 +185,20 @@ function CreateRecipe() {
           </button>
         </div>
       </div>
+      <div className="flex justify-center my-2">
+        <div className=" text-red-400 flex flex-col border-2 w-96">
+          {create_Data.instructions.map((item, index) => {
+            return (
+              <div key={index} className="p-1 flex  mx-3">
+                <label htmlFor="" className="w-40">
+                  {item.inst_stepNum}{" "}
+                </label>
+                <label htmlFor="">{item.inst_stepDesc} </label>
+              </div>
+            );
+          })}
+        </div>
+      </div>
       <div className="p-3">
         <label
           htmlFor="refImage"
@@ -127,20 +206,70 @@ function CreateRecipe() {
         >
           Ref.Image :
         </label>
-        <div className="mt-2">
-          <label
-            htmlFor="plsUploadImg"
-            className="text-blue-900 font-sans text-xl"
-          >
-            Please upload ref. image:
-          </label>
-          <button className="bg-green-600 text-white px-3 py-1 rounded ml-3">
-            Upload Image
-          </button>
-        </div>
+        <ImageUploading
+          multiple
+          value={images}
+          onChange={onChange}
+          maxNumber={maxNumber}
+          dataURLKey="data_url"
+        >
+          {({
+            imageList,
+            onImageUpload,
+            onImageRemoveAll,
+            onImageUpdate,
+            onImageRemove,
+            isDragging,
+            dragProps,
+          }) => (
+            // write your building UI
+            <div className="upload__image-wrapper">
+              <label
+                htmlFor="plsUploadImg"
+                className="text-blue-900 font-sans text-xl"
+              >
+                Please upload ref. image:
+              </label>
+              <button
+                className="bg-green-600 text-white px-3 py-1 rounded ml-3 mb-3"
+                style={isDragging ? { color: "red" } : undefined}
+                onClick={onImageUpload}
+                {...dragProps}
+              >
+                Upload Image
+              </button>
+              &nbsp;
+              {imageList.map((image, index) => (
+                <div key={index} className="flex items-center  justify-center">
+                  <img
+                    src={image.data_url}
+                    alt=""
+                    width="350"
+                    className="px-5"
+                  />
+                  <button
+                    className="bg-green-600 h-10 px-3 border-2 text-white"
+                    onClick={() => onImageUpdate(index)}
+                  >
+                    Update
+                  </button>
+                  <button
+                    className="bg-red-600 h-10 px-3 border-2 text-white"
+                    onClick={() => onImageRemove(index)}
+                  >
+                    Remove
+                  </button>
+                </div>
+              ))}
+            </div>
+          )}
+        </ImageUploading>
       </div>
       <div className="mt-5 flex justify-center ">
-        <button className="bg-green-600 text-white px-10 py-1 rounded">
+        <button
+          className="bg-green-600 text-white px-10 py-1 rounded"
+          onClick={onClickCreateRecipe}
+        >
           Create Recipe
         </button>
       </div>

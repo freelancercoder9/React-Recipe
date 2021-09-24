@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { NavLink, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { getPassword, getUserName } from "../actions";
 import { useDispatch, useSelector } from "react-redux";
 import { userLoginService } from "../services/UserServices";

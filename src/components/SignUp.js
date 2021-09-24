@@ -28,7 +28,7 @@ function SignUp() {
       const res = await user_SignUp_Service(signUp_Data);
 
       if (res.code === "20001") {
-        console.log("Success Response");
+        // console.log("Success Response");
         setErrorList({ ...errorList, serviceErrorResponse: "" });
         history.push("/signIn");
       } else {
@@ -39,21 +39,21 @@ function SignUp() {
         console.log("in username error");
         setErrorList({
           ...errorList,
-          userNameErrorMsg: "please enter valid user name",
+          userNameErrorMsg: "Please enter valid user name",
         });
       }
       if (errorList.ispwdError) {
         console.log("in password error");
         setErrorList({
           ...errorList,
-          pwdErrorMsg: "please enter password",
+          pwdErrorMsg: "Please enter password",
         });
       }
       if (errorList.isEmailError) {
-        console.log("in email  error");
+        // console.log("in email  error");
         setErrorList({
           ...errorList,
-          emailErrorMsg: "please enter email id",
+          emailErrorMsg: "Please enter email id",
         });
       }
 

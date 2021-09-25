@@ -83,17 +83,11 @@ function CreateRecipe() {
         />
       </div>
       <div className=" p-3">
-        <label
-          htmlFor="ingredients"
-          className="text-blue-900 font-sans text-xl"
-        >
+        <label htmlFor="ingredients" className="text-blue-900 font-sans text-xl">
           Ingredients :
         </label>
         <div className="flex justify-between mt-2">
-          <label
-            htmlFor="ingredientName"
-            className="text-blue-900 font-sans text-xl  w-28"
-          >
+          <label htmlFor="ingredientName" className="text-blue-900 font-sans text-xl  w-28">
             Name
           </label>
           <input
@@ -104,18 +98,15 @@ function CreateRecipe() {
               setIngredientName(e.target.value);
             }}
           />
-          <label
-            htmlFor="ingredientQuantity"
-            className="text-blue-900 font-sans text-xl w-28"
-          >
+          <label htmlFor="ingredientQuantity" className="text-blue-900 font-sans text-xl w-28">
             Quantity
           </label>
           <input
-            type="text"
+            type="number"
             value={ingredientQty}
             className=" border-2 border-gray-200 w-3/12 h-7 px-2 text-xl font-light ml-2"
             onChange={(e) => {
-              setIngredientQty(e.target.value);
+              setIngredientQty(parseInt(e.target.value));
             }}
           />
           <button
@@ -123,9 +114,10 @@ function CreateRecipe() {
             onClick={() => {
               console.log(ingredientName, "  00 ", ingredientQty);
               var obj = {
-                ing_Name: ingredientName,
-                ing_Qty: ingredientQty,
+                name: ingredientName,
+                amount: ingredientQty,
               };
+              console.log(obj);
               dispatch(getIngName_Quatity(obj));
               setIngredientName("");
               setIngredientQty("");
@@ -141,40 +133,31 @@ function CreateRecipe() {
             return (
               <div key={index} className="p-1 flex  mx-3">
                 <label htmlFor="" className="w-40">
-                  {item.ing_Name}
+                  {item.name}
                 </label>
-                <label htmlFor="">{item.ing_Qty}</label>
+                <label htmlFor="">{item.amount}</label>
               </div>
             );
           })}
         </div>
       </div>
       <div className=" p-3">
-        <label
-          htmlFor="instructions"
-          className="text-blue-900 font-sans text-xl w-28"
-        >
+        <label htmlFor="instructions" className="text-blue-900 font-sans text-xl w-28">
           Instructions :
         </label>
         <div className="flex justify-between mt-2">
-          <label
-            htmlFor="stepNo"
-            className="text-blue-900 font-sans text-xl w-28"
-          >
+          <label htmlFor="stepNo" className="text-blue-900 font-sans text-xl w-28">
             Step No.
           </label>
           <input
-            type="text"
+            type="number"
             value={stepNum}
             className=" border-2 border-gray-200 w-3/12 h-7 px-2 text-xl font-light ml-2"
             onChange={(e) => {
-              setStepNum(e.target.value);
+              setStepNum(parseInt(e.target.value));
             }}
           />
-          <label
-            htmlFor="description"
-            className="text-blue-900 font-sans text-xl w-28 "
-          >
+          <label htmlFor="description" className="text-blue-900 font-sans text-xl w-28 ">
             Description
           </label>
           <input
@@ -189,8 +172,8 @@ function CreateRecipe() {
             className="bg-green-500 text-white px-3 py-1 rounded"
             onClick={() => {
               var obj1 = {
-                inst_stepNum: stepNum,
-                inst_stepDesc: stepDesc,
+                stepNo: stepNum,
+                stepDesc: stepDesc,
               };
               dispatch(getStepNo_desc(obj1));
               setStepNum("");
@@ -207,43 +190,23 @@ function CreateRecipe() {
             return (
               <div key={index} className="p-1 flex  mx-3">
                 <label htmlFor="" className="w-40">
-                  {item.inst_stepNum}{" "}
+                  {item.stepNo}{" "}
                 </label>
-                <label htmlFor="">{item.inst_stepDesc} </label>
+                <label htmlFor="">{item.stepDesc} </label>
               </div>
             );
           })}
         </div>
       </div>
       <div className="p-3">
-        <label
-          htmlFor="refImage"
-          className="text-blue-900 font-sans text-xl w-32"
-        >
+        <label htmlFor="refImage" className="text-blue-900 font-sans text-xl w-32">
           Ref.Image :
         </label>
-        <ImageUploading
-          multiple
-          value={images}
-          onChange={onChange}
-          maxNumber={maxNumber}
-          dataURLKey="data_url"
-        >
-          {({
-            imageList,
-            onImageUpload,
-            onImageRemoveAll,
-            onImageUpdate,
-            onImageRemove,
-            isDragging,
-            dragProps,
-          }) => (
+        <ImageUploading multiple value={images} onChange={onChange} maxNumber={maxNumber} dataURLKey="data_url">
+          {({ imageList, onImageUpload, onImageRemoveAll, onImageUpdate, onImageRemove, isDragging, dragProps }) => (
             // write your building UI
             <div className="upload__image-wrapper">
-              <label
-                htmlFor="plsUploadImg"
-                className="text-blue-900 font-sans text-xl"
-              >
+              <label htmlFor="plsUploadImg" className="text-blue-900 font-sans text-xl">
                 Please upload ref. image:
               </label>
               <button
@@ -257,22 +220,11 @@ function CreateRecipe() {
               &nbsp;
               {imageList.map((image, index) => (
                 <div key={index} className="flex items-center  justify-center">
-                  <img
-                    src={image.data_url}
-                    alt=""
-                    width="350"
-                    className="px-5"
-                  />
-                  <button
-                    className="bg-green-600 h-10 px-3 border-2 text-white"
-                    onClick={() => onImageUpdate(index)}
-                  >
+                  <img src={image.data_url} alt="" width="350" className="px-5" />
+                  <button className="bg-green-600 h-10 px-3 border-2 text-white" onClick={() => onImageUpdate(index)}>
                     Update
                   </button>
-                  <button
-                    className="bg-red-600 h-10 px-3 border-2 text-white"
-                    onClick={() => onImageRemove(index)}
-                  >
+                  <button className="bg-red-600 h-10 px-3 border-2 text-white" onClick={() => onImageRemove(index)}>
                     Remove
                   </button>
                 </div>
@@ -282,10 +234,7 @@ function CreateRecipe() {
         </ImageUploading>
       </div>
       <div className="mt-5 flex justify-center ">
-        <button
-          className="bg-green-600 text-white px-10 py-1 rounded"
-          onClick={onClickCreateRecipe}
-        >
+        <button className="bg-green-600 text-white px-10 py-1 rounded" onClick={onClickCreateRecipe}>
           Create Recipe
         </button>
       </div>

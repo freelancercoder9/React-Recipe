@@ -37,7 +37,7 @@ function DeleteRecipe() {
   return (
     <div className="p-3">
       <div className="flex justify-between">
-        <label htmlFor="recipeID" className="">
+        <label htmlFor="recipeID" className="text-blue-900 font-sans text-xl">
           Recipe ID
         </label>
         <input
@@ -50,13 +50,23 @@ function DeleteRecipe() {
       </div>
       <div>
         <div className="mt-3">
-          <label htmlFor="recipeName">Recipe Name:</label>
+          <label
+            htmlFor="recipeName"
+            className="text-blue-900 font-sans text-xl"
+          >
+            Recipe Name:
+          </label>
           <label htmlFor="Biryani" className="ml-8">
             Biryani
           </label>
         </div>
         <div className="mt-3">
-          <label htmlFor="ingredients">Ingredients:</label>
+          <label
+            htmlFor="ingredients"
+            className="text-blue-900 font-sans text-xl"
+          >
+            Ingredients:
+          </label>
           {ingredients.map((item, index) => {
             return (
               <div key={index} className="ml-32">
@@ -71,7 +81,12 @@ function DeleteRecipe() {
           })}
         </div>
         <div>
-          <label htmlFor="instructions">Instructions:</label>
+          <label
+            htmlFor="instructions"
+            className="text-blue-900 font-sans text-xl"
+          >
+            Instructions:
+          </label>
           {instructions.map((item, index) => {
             return (
               <div key={index} className="ml-32">
@@ -84,7 +99,9 @@ function DeleteRecipe() {
           })}
         </div>
         <div className="">
-          <label htmlFor="">Ref.Image:</label>
+          <label htmlFor="" className="text-blue-900 font-sans text-xl">
+            Ref.Image:
+          </label>
           <img src={BiryaniImg} alt="BiryaniImage" className="w-56 ml-32" />
         </div>
       </div>

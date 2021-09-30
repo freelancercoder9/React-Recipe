@@ -32,16 +32,19 @@ function CreateRecipe() {
     console.log(imageList, addUpdateIndex);
     setImages(imageList);
   };
-  const onClickCreateRecipe = () => {
+  const onClickCreateRecipe = async () => {
     console.log("in create", images);
     var create_DataNew = {
       ...create_Data,
-      image: images[0].data_url.split(",")[1],
+      image: images[0].data_url,
       userName: userSession_Data.userName,
       email: userSession_Data.email,
     };
 
-    createRecipe_Service(create_DataNew, userSession_Data.accessToken);
+    const res = await createRecipe_Service(
+      create_DataNew,
+      userSession_Data.accessToken
+    );
 
     // if (
     //   errorList.isRecipeName === false &&
@@ -123,8 +126,8 @@ function CreateRecipe() {
             onClick={() => {
               console.log(ingredientName, "  00 ", ingredientQty);
               var obj = {
-                ing_Name: ingredientName,
-                ing_Qty: ingredientQty,
+                name: ingredientName,
+                amount: ingredientQty,
               };
               dispatch(getIngName_Quatity(obj));
               setIngredientName("");
@@ -139,11 +142,11 @@ function CreateRecipe() {
         <div className=" text-red-400 flex flex-col border-2 w-96">
           {create_Data.ingredients.map((item, index) => {
             return (
-              <div key={index} className="p-1 flex  mx-3">
+              <div key={index} className="p-1 flex justify-around mx-3">
                 <label htmlFor="" className="w-40">
-                  {item.ing_Name}
+                  {item.name}
                 </label>
-                <label htmlFor="">{item.ing_Qty}</label>
+                <label htmlFor="">{item.amount}</label>
               </div>
             );
           })}
@@ -189,8 +192,8 @@ function CreateRecipe() {
             className="bg-green-500 text-white px-3 py-1 rounded"
             onClick={() => {
               var obj1 = {
-                inst_stepNum: stepNum,
-                inst_stepDesc: stepDesc,
+                stepNo: stepNum,
+                stepDesc: stepDesc,
               };
               dispatch(getStepNo_desc(obj1));
               setStepNum("");
@@ -201,15 +204,15 @@ function CreateRecipe() {
           </button>
         </div>
       </div>
-      <div className="flex justify-center my-2">
+      <div className="flex justify-evenly my-2">
         <div className=" text-red-400 flex flex-col border-2 w-96">
           {create_Data.instructions.map((item, index) => {
             return (
-              <div key={index} className="p-1 flex  mx-3">
+              <div key={index} className="p-1 flex justify-around mx-3">
                 <label htmlFor="" className="w-40">
-                  {item.inst_stepNum}{" "}
+                  {item.stepNo}{" "}
                 </label>
-                <label htmlFor="">{item.inst_stepDesc} </label>
+                <label htmlFor="">{item.stepDesc} </label>
               </div>
             );
           })}
